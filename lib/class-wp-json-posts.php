@@ -166,10 +166,12 @@ class WP_JSON_Posts {
 		// Special parameter handling
 		$query['paged'] = absint( $page );
 
-		$post_query = new WP_Query();
-		$posts_list = $post_query->query( $query );
+		global $wp_query;
+		
+		$wp_query = new WP_Query();
+		$posts_list = $wp_query->query( $query );
 		$response   = new WP_JSON_Response();
-		$response->query_navigation_headers( $post_query );
+		$response->query_navigation_headers( $wp_query );
 
 		if ( ! $posts_list ) {
 			$response->set_data( array() );
